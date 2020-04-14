@@ -55,7 +55,7 @@
             <!-- ============================================================== -->
             <!-- toggle and nav items -->
             <!-- ============================================================== -->
-            <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
+            {{-- <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
                 <li class="nav-item d-none d-md-block">
                     <a class="nav-link" href="javascript:void(0)">
                         <div class="customize-input">
@@ -68,11 +68,11 @@
                         </div>
                     </a>
                 </li>
-            </ul>
+            </ul> --}}
             <!-- ============================================================== -->
             <!-- Right side toggle and nav items -->
             <!-- ============================================================== -->
-            <ul class="navbar-nav float-right">
+            <ul class="navbar-nav float-right ml-auto">
                 <!-- ============================================================== -->
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
