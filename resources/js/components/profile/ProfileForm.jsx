@@ -98,7 +98,9 @@ export default class ProfileForm extends React.Component {
     }
 
     saveForm = (event) => {
-        if ( this.data.user != this.state.user || this.data.profile != this.state.profile || (this.state.profile.province && this.state.profile.province.id ) ) {
+        if ( this.data.user != this.state.user 
+            || this.data.profile != this.state.profile 
+            ) {
             document.getElementById("profile-form-fst").submit();
         }
 
