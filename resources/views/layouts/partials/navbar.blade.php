@@ -79,8 +79,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/users/profile-pic.jpg') }}" alt="user" class="rounded-circle"
-                            width="40">
+                        <img id="nav-profile-avatar" src="@if(Auth::user()->profile && Auth::user()->profile->avatar ) {{ Auth::user()->profile->avatar }}  @else {{ asset('images/no-user.png') }} @endif" alt="user" class="rounded-circle"
+                            width="40" height=40>
                         <span class="ml-2 d-none d-lg-inline-block">
                             <span class="text-dark">{{ Auth::user()->name }}</span>
                             <i data-feather="chevron-down" class="svg-icon"></i>

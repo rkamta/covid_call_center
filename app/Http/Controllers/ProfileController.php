@@ -30,23 +30,28 @@ class ProfileController extends Controller
         $request->session()->put('page', 'profile');
         $user = $request->user();
         if($user->profile) {
-            $state = State::where('id', $user->profile->state_id)->first();
-            $district = District::where('id', $user->profile->district_id)->first();
+            $state = $user->profile->state;
+            $district = $user->profile->district;
             $profile = array(
                 'avatar' => $user->profile->avatar,
-                'province' => array('id' => $state->id, 'name' => $state->name),
+                'province' => $state ? array('id' => $state->id, 'name' => $state->name) : new \ArrayObject(),
                 'district' => $district ? array(
                     'id' => $district->id, 
                     'name' => $district->name, 
                     'state_id' => $district->state_id 
-                ) : array(),
+                ) : new \ArrayObject(),
             );
         }else {
             $profile = array(
                 'avatar' => '',
-                'province' => array(),
-                'district' => array(),
+                'province' => new \ArrayObject(),
+                'district' => new \ArrayObject(),
             );
+        }
+
+        $districts = array();
+        if($user->profile && !empty($user->profile->state->districts)) {
+            $districts = $user->profile->state->districts;
         }
         
         $data = array(
@@ -57,7 +62,7 @@ class ProfileController extends Controller
             ),
             'profile' => $profile,
             'provinces' => State::all(['id', 'name']),
-            'districts_of_user_province' => $user->profile ? $state->districts : [],
+            'districts_of_user_province' => $districts,
         );
         return view('profile')->with('data', $data);
     }
@@ -86,8 +91,8 @@ class ProfileController extends Controller
 
             $profile->user_id = $user->id;
             $profile->avatar = $avatar;
-            $profile->state_id = $state_id;
-            $profile->district_id = $district_id;
+            $profile->state_id = $state_id > 0 ? $state_id : null;
+            $profile->district_id = $district_id ? $district_id : null;
             $profile->save();
             
         } else if ($form === 'snd') {

@@ -18,6 +18,7 @@ export default class ProfileForm extends React.Component {
             toastText: '',
             isSuccess: false,
             districts: {},
+            uploading: false,
         }
     }
 
@@ -50,7 +51,7 @@ export default class ProfileForm extends React.Component {
         if(this.state.user.role != 'superadmin') {
             const provinces = this.state.provinces;
             let province_id = null;
-            if (this.state.profile && this.state.profile.province) {
+            if (Object.keys(this.state.profile.province).length > 0) {
                 province_id = this.state.profile.province.id
             }
             let _str = '<option value=0><strong>Select Your Province</strong></option>';
@@ -72,8 +73,9 @@ export default class ProfileForm extends React.Component {
         if(this.state.user.role == 'supervisor') {
             let _str = '';
             let district_id = null;
+            console.log(districts);
             if(districts.length) {
-                if (this.state.profile && this.state.profile.district) {
+                if (Object.keys(this.state.profile.district).length > 0) {
                     district_id = this.state.profile.district.id
                 }
                 _str = _str + '<option value=0>Choose Your District</option>';
@@ -96,14 +98,13 @@ export default class ProfileForm extends React.Component {
     }
 
     saveForm = (event) => {
-        if ( (this.data.user != this.state.user || this.data.profile != this.state.profile) && this.state.profile.province.id ) {
+        if ( this.data.user != this.state.user || this.data.profile != this.state.profile || (this.state.profile.province && this.state.profile.province.id ) ) {
             document.getElementById("profile-form-fst").submit();
-        }else{
-            this.setState({
-                isEdit: false
-            })
         }
-        
+
+        this.setState({
+            isEdit: false
+        })
     }
 
     onImageChange = (token) => {
@@ -113,6 +114,7 @@ export default class ProfileForm extends React.Component {
         formData.append('imgFile', imgFile);
         const settings = { headers: { 'X-CSRF-TOKEN': token, 'content-type': 'multipart/form-data', 'accept': 'application/json', } };
         const _this = this;
+        this.toggleUploading();
         axios.post('/ajax/avatar_upload', formData, settings)
             .then(function (response) {
                 if (response.data.result > 0) {
@@ -126,8 +128,11 @@ export default class ProfileForm extends React.Component {
                             avatar: response.data.file_name
                         }
                     }, () => {
-                        console.log(_this.state.profile);
+                        document.getElementById('nav-profile-avatar').src = response.data.file_name;
                     });
+                    setTimeout(() => {
+                        _this.toggleUploading(); 
+                    }, 200);
 
                 } else if (response.data.result == 0) {
                     _this.setState({
@@ -189,7 +194,6 @@ export default class ProfileForm extends React.Component {
                         });
                     }
                 }
-                console.log(this.state.profile);
             });
             
         }else {
@@ -227,6 +231,14 @@ export default class ProfileForm extends React.Component {
                 }
             });
         }
+    }
+
+    toggleUploading() {
+        this.setState({
+            uploading: !this.state.uploading
+        }, () => {
+            document.getElementById('uploading').classList.toggle("d-none");
+        });
     }
 
     render() {
@@ -303,7 +315,7 @@ export default class ProfileForm extends React.Component {
                                     <p className="mb-0 mt-1" style={styles.textUserName}>
                                         Province:&nbsp;
                                         {
-                                            this.state.profile.province ? this.state.profile.province.name : ' None'
+                                            Object.keys(this.state.profile.province).length > 0 ? this.state.profile.province.name : ' None'
                                         }
                                     </p>
                                     : ''
@@ -313,13 +325,13 @@ export default class ProfileForm extends React.Component {
                                         <p className="mb-0 mt-1" style={styles.textUserName}>
                                             Province:&nbsp;
                                             {
-                                                this.state.profile.province ? this.state.profile.province.name : ' None'
+                                                Object.keys(this.state.profile.province).length > 0 ? this.state.profile.province.name : ' None'
                                             }
                                         </p>
                                         <p className="mb-0 mt-1" style={styles.textUserName}>
                                             District:&nbsp;
                                             {
-                                                this.state.profile.district ? this.state.profile.district.name : ' None'
+                                                Object.keys(this.state.profile.district).length > 0 ? this.state.profile.district.name : ' None'
                                             }
                                         </p>
                                     </div>
