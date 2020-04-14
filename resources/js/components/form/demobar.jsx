@@ -25,6 +25,7 @@ export default class Demobar extends React.Component {
       roPreviewVisible: false,
       user_id: props.user_id,
       hide_actions: true,
+      edit_mode: parseInt(props.edit_mode)
     };
 
     const update = this._onChange.bind(this);
@@ -34,8 +35,10 @@ export default class Demobar extends React.Component {
   }
 
   componentDidMount() {
-    this._insertUsers();
-    if(parseInt(this.state.user_id) > 0) {
+    if(!this.state.edit_mode) {
+      this._insertUsers();
+    }
+    if (parseInt(this.state.user_id) > 0) {
       this.setState({
         hide_actions: false
       })
@@ -69,11 +72,11 @@ export default class Demobar extends React.Component {
   }
 
   _onUserChange = (e) => {
-    if(e.target.value > 0) {
+    if (e.target.value > 0) {
       this.setState({
         hide_actions: false,
       });
-    }else{
+    } else {
       this.setState({
         hide_actions: true,
       });
@@ -82,14 +85,14 @@ export default class Demobar extends React.Component {
       user_id: e.target.value
     })
   }
-  
+
   _insertUsers() {
     const users = JSON.parse(this.props.users);
     let _str = '<option disabled selected>Select User</option>';
     users.map(user => {
       let selected = '';
       this.props.user_id == user.id ? selected = 'selected' : ''
-      _str = _str + '<option value='+ user.id +' '+ selected +'>'+ user.name +'</option>'
+      _str = _str + '<option value=' + user.id + ' ' + selected + '>' + user.name + '</option>'
     });
 
     document.getElementById('form-user').innerHTML = _str;
@@ -128,10 +131,10 @@ export default class Demobar extends React.Component {
         <button className="btn btn-primary pull-right" style={{ marginRight: '10px' }} onClick={this.showPreview.bind(this)}>Preview Form</button>
         {/* <button className="btn btn-default pull-right" style={{ marginRight: '10px' }} onClick={this.showShortPreview.bind(this)}>Alternate/Short Form</button> */}
         {/* <button className="btn btn-default pull-right" style={{ marginRight: '10px' }} onClick={this.showRoPreview.bind(this)}>Read Only Form</button> */}
-        <select id="form-user" className="p-2 pull-right mr-5" onChange={e => this._onUserChange(e)}>
-        </select>
+        {this.state.edit_mode ? '' : <select id="form-user" className="p-2 pull-right mr-5" onChange={e => this._onUserChange(e)}>
+        </select>}
 
-        { this.state.previewVisible &&
+        {this.state.previewVisible &&
           <div className={modalClass} tabIndex="-1" role="dialog" aria-hidden="true">
             <div className="modal-dialog">
               <div className="modal-content">
@@ -146,23 +149,23 @@ export default class Demobar extends React.Component {
                     back_name="Back"
                     answer_data={answers}
                     action_name="Save"
-                    form_action="/api/form"
+                    form_action={this.props.save_url}
                     form_method="POST"
                     // skip_validations={true}
                     // onSubmit={this._onSubmit}
                     variables={this.props.variables}
-                    data={this.state.data} 
+                    data={this.state.data}
                     authenticity_token=""
                     user_id={this.state.user_id}
                     hide_actions={this.state.hide_actions}
-                    />
+                  />
                 </div>
               </div>
             </div>
           </div>
         }
 
-        { this.state.roPreviewVisible &&
+        {this.state.roPreviewVisible &&
           <div className={roModalClass}>
             <div className="modal-dialog">
               <div className="modal-content">
@@ -177,7 +180,7 @@ export default class Demobar extends React.Component {
                   read_only={true}
                   variables={this.props.variables}
                   hide_actions={true}
-                  data={this.state.data}  
+                  data={this.state.data}
                 />
 
                 <div className="modal-footer">
@@ -188,7 +191,7 @@ export default class Demobar extends React.Component {
           </div>
         }
 
-        { this.state.shortPreviewVisible &&
+        {this.state.shortPreviewVisible &&
           <div className={shortModalClass}>
             <div className="modal-dialog">
               <div className="modal-content">

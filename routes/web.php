@@ -30,9 +30,9 @@ Route::group(['middleware' => 'superadmin'], function () {
         Route::get('/view/{uuid}', 'FormController@show')->name('formset-view');
         Route::get('/add', 'FormController@add')->name('formset-add');
         Route::get('/add/{user_id}', 'FormController@add')->name('formset-user-add');
-        Route::get('/edit/{slug}', 'FormController@edit')->name('formset-edit');
+        Route::get('/edit/{uuid}', 'FormController@edit')->name('formset-edit');
         Route::post('/update/{slug}', 'FormController@update')->name('formset-update');
-        Route::post('/delete/{slug}', 'FormController@delete')->name('formset-delete');
+        Route::get('/delete/{id}', 'FormController@delete')->name('formset-delete');
     });
 });
 

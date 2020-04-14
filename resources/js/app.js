@@ -16,7 +16,7 @@ require('../../node_modules/datatables.net-bs4/js/dataTables.bootstrap4');
 
 require('./components/Example');
 
-require('./components/form/ReactFormBuilder');
+require('./components/form/index.js');
 
 require('./components/profile/ProfileForm');
 

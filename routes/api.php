@@ -18,12 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/formdata', function (Request $request) {
-    return json_encode("[]");
-});
+Route::get('/formdata/get/{id}', 'API\FormController@get');
 
-Route::post('/formdata', function (Request $request) {
+Route::post('/formdata/update/{id}', function (Request $request) {
     return json_encode("POST REQUEST");
 });
 
-Route::post('/form', 'API\FormController@store');
+Route::post('/form/add', 'API\FormController@store');
+Route::post('/form/update/{id}', 'API\FormController@update');

@@ -37,20 +37,14 @@ class FormController extends Controller
         }
 
         $formset = FormSet::where('uuid', $uuid)->first();
-
-        // dump($formset);exit();
-
+        
         if(!$formset) {
             flashy()->error('Your Form Doesn`t Exist!');
             return redirect()->route('formsets');
         }
 
-        return view('forms/view', ['formset' => $formset]);
-    }
-
-    public function add(Request $request, $user_id=null) {
-        $user = User::where(['id'=> $user_id, 'role' => 'operator'])->first();
-        if($request->method == 'POST' || ($user_id && !$user)) {
+        $user = $formset->user;
+        if($request->method == 'POST' || !$user) {
             return redirect()->route('formsets');
         }
         $users = User::select('id', 'name', 'email')->where('role', 'operator')->get();
@@ -65,6 +59,34 @@ class FormController extends Controller
             'user_id' => $user ? $user->id : 0,
             'users' => $formUsers
         );
+
+        return view('forms/view', ['data' => $data]);
+    }
+
+    public function add(Request $request, $user_id=null) {
+        $user = User::where(['id'=> $user_id, 'role' => 'operator'])->first();
+        if($request->method == 'POST' || ($user_id && !$user)) {
+            return redirect()->route('formsets');
+        }
+        if($user && $user->formset) {
+            return redirect()->route('formset-edit', ['id' => $user->formset->id]);
+        }
+        $users = User::select('id', 'name', 'email')->where('role', 'operator')->get();
+        $formUsers = [];
+        for ($i=0; $i < count($users); $i++) { 
+            if($users[$i]->formset) continue;
+            array_push($formUsers, $users[$i]);
+        }
+        if(empty($formUsers)) {
+            flashy()->error('No available users!');
+            return redirect()->route('formsets');
+        }
+        $request->session()->put('page', 'forms');
+        $request->session()->put('sub_page', 'add');
+        $data = array(
+            'user_id' => $user ? $user->id : 0,
+            'users' => $formUsers
+        );
         return view('forms/add', ['data' => $data]);
     }
 
@@ -72,13 +94,38 @@ class FormController extends Controller
         return json_encode($request->post());
     }
 
-    public function edit(Request $request, $slug) {
-        if($request->method == 'POST') {
-            
+    public function edit(Request $request, $id) {
+        if (!$id) {
+            return redirect()->route('formsets');
+        }
+
+        $formset = FormSet::where('id', $id)->first();
+        
+        if(!$formset) {
+            flashy()->error('Your Form Doesn`t Exist!');
+            return redirect()->route('formsets');
+        }
+
+        $user = $formset->user;
+        if($request->method == 'POST' || !$user) {
+            return redirect()->route('formsets');
+        }
+        $users = User::select('id', 'name', 'email')->where('role', 'operator')->get();
+        $formUsers = [];
+        for ($i=0; $i < count($users); $i++) { 
+            if($users[$i]->formset) continue;
+            array_push($formUsers, $users[$i]);
         }
         $request->session()->put('page', 'forms');
         $request->session()->put('sub_page', 'add');
-        return view('forms/add');
+        $data = array(
+            'user_id' => $user ? $user->id : 0,
+            'users' => $formUsers,
+            'formset_id' => $formset->id,
+            'items' => $formset->items
+        );
+
+        return view('forms/edit', ['data' => $data]);
     }
 
     public function update(Request $request, $slug) {
@@ -90,10 +137,8 @@ class FormController extends Controller
         return view('forms/add');
     }
 
-    public function delete(Request $request, $slug) {
-        if($request->method == 'POST') {
-            
-        }
+    public function delete(Request $request, $id) {
+        
         $request->session()->put('page', 'forms');
         $request->session()->put('sub_page', 'add');
         return view('forms/add');

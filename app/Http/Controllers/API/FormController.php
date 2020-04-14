@@ -20,6 +20,11 @@ class FormController extends Controller
         //
     }
 
+    public function get(Request $request, $id) {
+        $form = FormSet::where('id', $id)->first();
+        return $form ? json_encode($form->items) : json_encode(array());
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -56,7 +61,11 @@ class FormController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form = FormSet::where('id', $id)->first();
+        $form->items = $request->post('items');
+        $form->save();
+
+        return redirect()->route('formsets');
     }
 
     /**

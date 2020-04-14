@@ -3,18 +3,12 @@
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import Preview from './Preview';
 import Toolbar from './toolbar';
 import ReactFormGenerator from './form';
 import store from './stores/store';
-import * as variables from './variables';
-import DemoBar from './demobar';
-
-const url = '/api/formdata';
-const saveUrl = '/api/formdata';
 
 class ReactFormBuilder extends React.Component {
   constructor(props) {
@@ -91,17 +85,3 @@ FormBuilders.ElementStore = store;
 export default FormBuilders;
 
 export { FormBuilder as ReactFormBuilder, ReactFormGenerator, store as ElementStore };
-
-
-if (document.getElementById('react-form-builder')) {
-  ReactDOM.render(<FormBuilders.ReactFormBuilder variables={variables} url={url} saveUrl={saveUrl} />, document.getElementById('react-form-builder'));
-}
-
-if (document.getElementById('demo-bar')) {
-  const users = document.getElementById('demo-bar').getAttribute('users');
-  const user_id = document.getElementById('demo-bar').getAttribute('user_id');
-  ReactDOM.render(
-      <DemoBar variables={variables} users={users} user_id={user_id}/>,
-      document.getElementById('demo-bar'),
-    );
-}
