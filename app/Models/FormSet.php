@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class FormSet extends Model
 {
     protected $fillable = [
-        'slug', 'items', 'active'
+        'uuid', 'items', 'user_id', 'active'
     ];
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
 }

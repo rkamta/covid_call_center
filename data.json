@@ -1,0 +1,63 @@
+[
+    {
+        "id": "0A826A35-4A9D-4CB9-AC76-5C13B55DB128",
+        "element": "Header",
+        "text": "Header Text",
+        "static": true,
+        "required": false,
+        "bold": false,
+        "italic": false,
+        "content": "Placeholder Text...",
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true
+    },
+    {
+        "id": "75C099F8-2916-4E5C-BF95-C4007E5BC098",
+        "element": "Label",
+        "text": "Label",
+        "static": true,
+        "required": false,
+        "bold": false,
+        "italic": false,
+        "content": "Placeholder Text...",
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true
+    },
+    {
+        "id": "6ABDC5B0-2C24-457B-A2B5-31D8B46AE913",
+        "element": "RadioButtons",
+        "text": "Multiple Choice",
+        "required": false,
+        "canHaveAnswer": true,
+        "canHavePageBreakBefore": true,
+        "canHaveAlternateForm": true,
+        "canHaveDisplayHorizontal": true,
+        "canHaveOptionCorrect": true,
+        "canHaveOptionValue": true,
+        "field_name": "radiobuttons_25B41F10-4C01-4543-9910-FD24F63C9A17",
+        "label": "Placeholder Label",
+        "options": [
+            {
+                "value": "place_holder_option_1",
+                "text": "Place holder option 1",
+                "key": "radiobuttons_option_C96C636B-E3B3-4C5B-B5DF-3865CB49488C"
+            },
+            {
+                "value": "place_holder_option_2",
+                "text": "Place holder option 2",
+                "key": "radiobuttons_option_1B3874CF-6309-422F-BBF5-2588AEFCCFF9"
+            },
+            {
+                "value": "place_holder_option_3",
+                "text": "Place holder option 3",
+                "key": "radiobuttons_option_DBFE727F-8479-48A7-9FA1-D2EC28DFD644"
+            }
+        ]
+    }
+]

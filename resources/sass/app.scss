@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 @import "node_modules/font-awesome/scss/font-awesome.scss";
 
 
@@ -12,16 +13,21 @@
 @import '~bootstrap/scss/bootstrap';
 
 //Form Builder
-@import './react-star-rating';
-@import './react-select';
-@import './react-bootstrap-slider';
-@import './react-date-picker';
-@import './react-draft.scss';
+@import './form/react-star-rating';
+@import './form/react-select';
+@import './form/react-bootstrap-slider';
+@import './form/react-date-picker';
+@import './form/react-draft.scss';
+@import './form/form-builder.scss';
+@import './form/form-builder-form.scss';
 
-@import './form-builder.scss';
-@import './form-builder-form.scss';
-
-// Pages
+// Template CSS
 @import '../../node_modules/c3/c3.min.css';
 @import '../../node_modules/chartist/dist/chartist.min.css';
 @import '../../node_modules/jvectormap/jquery-jvectormap.css';
+
+// Pages
+@import './pages/profile.scss';
+
+// DataTable
+@import '../../node_modules//datatables.net-bs4/css/dataTables.bootstrap4.min.css';

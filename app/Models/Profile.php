@@ -8,10 +8,14 @@ class Profile extends Model
 {
     
     protected $fillable = [
-        'avatar', 'state_id', 'disctrict_id'
+        'user_id', 'avatar', 'state_id', 'district_id'
     ];
 
     protected $hidden = [];
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
 
     public function state() {
         return $this->belongsTo('App\Models\State');

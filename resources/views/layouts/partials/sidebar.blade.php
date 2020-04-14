@@ -15,6 +15,7 @@
                 <li class="nav-small-cap">
                     <span class="hide-menu">Management</span>
                 </li>
+                @if(Auth::user()->role === 'superadmin') 
                 <li class="sidebar-item @if ( Session::get('page') === 'forms' ) selected @endif"> 
                     <a class="sidebar-link has-arrow" href="javascript:void(0)"
                         aria-expanded="false">
@@ -38,6 +39,7 @@
                         </li>
                     </ul>
                 </li>
+                @endif
                 <li class="sidebar-item"> <a class="sidebar-link has-arrow" href="javascript:void(0)"
                         aria-expanded="false"><i data-feather="users" class="feather-icon"></i><span
                             class="hide-menu">Accounts </span></a>

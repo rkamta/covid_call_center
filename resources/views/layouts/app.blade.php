@@ -49,6 +49,7 @@
     <script src="{{ asset('lib/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
     <script src="{{ asset('js/pages/sidebarmenu.js') }}"></script>
     <script src="{{ asset('js/pages/custom.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
     @yield('after_script')
     @include('flashy::message')

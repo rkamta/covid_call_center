@@ -26,6 +26,4 @@ Route::post('/formdata', function (Request $request) {
     return json_encode("POST REQUEST");
 });
 
-Route::post('/form', function (Request $request) {
-    return json_encode($request->post());
-});
+Route::post('/form', 'API\FormController@store');

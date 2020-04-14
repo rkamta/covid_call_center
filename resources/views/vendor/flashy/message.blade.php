@@ -5,10 +5,11 @@
     border-radius: 4px;
     font-weight: 400;
     position: fixed;
-    top: 50px;
+    top: 100px;
     right: 20px;
     font-size: 16px;
     color: #fff;
+    z-index: 1000;
 }
 
 .flashy--success {

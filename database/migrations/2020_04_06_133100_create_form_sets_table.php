@@ -15,10 +15,11 @@ class CreateFormSetsTable extends Migration
     {
         Schema::create('form_sets', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('slug');
+            $table->string('uuid')->unique();
             $table->text('items')->nullable();
-            $table->boolean('active')->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->boolean('active')->default(1);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

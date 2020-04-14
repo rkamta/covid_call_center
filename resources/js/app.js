@@ -6,6 +6,8 @@
 
 require('./bootstrap');
 
+require('../../node_modules/datatables.net-bs4/js/dataTables.bootstrap4');
+
 /**
  * Next, we will create a fresh React component instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -14,6 +16,8 @@ require('./bootstrap');
 
 require('./components/Example');
 
-require('./components/ReactFormBuilder');
+require('./components/form/ReactFormBuilder');
+
+require('./components/profile/ProfileForm');
 
   

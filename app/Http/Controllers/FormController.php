@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\FormSet;
 
 class FormController extends Controller
@@ -21,16 +22,21 @@ class FormController extends Controller
     {
         $request->session()->put('page', 'forms');
         $request->session()->put('sub_page', 'list');
-        $forms = FormSet::all();
-        return view('forms/list', ['forms' => $forms]);
+        $users = User::where('role', 'operator')->get();
+        $forms = FormSet::select('user_id')->get();
+        $data = array(
+            'users' => $users,
+            'forms' => $forms,
+        );
+        return view('forms/list', $data);
     }
 
-    public function show($slug) {
-        if (!$slug) {
+    public function show(Request $request, $uuid) {
+        if (!$uuid) {
             return redirect()->route('formsets');
         }
 
-        $formset = FormSet::where('slug', $slug)->first();
+        $formset = FormSet::where('uuid', $uuid)->first();
 
         // dump($formset);exit();
 
@@ -42,7 +48,49 @@ class FormController extends Controller
         return view('forms/view', ['formset' => $formset]);
     }
 
-    public function add(Request $request) {
+    public function add(Request $request, $user_id=null) {
+        $user = User::where(['id'=> $user_id, 'role' => 'operator'])->first();
+        if($request->method == 'POST' || ($user_id && !$user)) {
+            return redirect()->route('formsets');
+        }
+        $users = User::select('id', 'name', 'email')->where('role', 'operator')->get();
+        $formUsers = [];
+        for ($i=0; $i < count($users); $i++) { 
+            if($users[$i]->formset) continue;
+            array_push($formUsers, $users[$i]);
+        }
+        $request->session()->put('page', 'forms');
+        $request->session()->put('sub_page', 'add');
+        $data = array(
+            'user_id' => $user ? $user->id : 0,
+            'users' => $formUsers
+        );
+        return view('forms/add', ['data' => $data]);
+    }
+
+    public function save(Request $request) {
+        return json_encode($request->post());
+    }
+
+    public function edit(Request $request, $slug) {
+        if($request->method == 'POST') {
+            
+        }
+        $request->session()->put('page', 'forms');
+        $request->session()->put('sub_page', 'add');
+        return view('forms/add');
+    }
+
+    public function update(Request $request, $slug) {
+        if($request->method == 'POST') {
+            
+        }
+        $request->session()->put('page', 'forms');
+        $request->session()->put('sub_page', 'add');
+        return view('forms/add');
+    }
+
+    public function delete(Request $request, $slug) {
         if($request->method == 'POST') {
             
         }

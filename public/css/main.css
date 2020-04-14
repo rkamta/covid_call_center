@@ -224,6 +224,123 @@
     margin-left: 3em;
 }
 
+/* Ribbon */
+
+.ribbon-wrapper {
+    position: relative;
+    z-index: 1;
+    margin: auto;
+}
+
+.ribbon {
+    font-size: 20px !important;
+    font-family: "Open Sans", sans-serif;
+    text-transform: uppercase;
+    width: 40%;
+    position: relative;
+    background: #38B5C9;
+    color: #fff;
+    text-align: center;
+    padding: 1em 2em;
+    margin: 0 auto 2em auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.ribbon:after,
+.ribbon:before {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: -1em;
+    border: 1.5em solid #2CA9B3;
+    z-index: -1;
+}
+
+.ribbon:before {
+    left: -2em;
+    border-right-width: 1.5em;
+    border-left-color: transparent;
+}
+
+.ribbon:after {
+    right: -2em;
+    border-left-width: 1.5em;
+    border-right-color: transparent;
+}
+
+.ribbon .ribbon-inner:after,
+.ribbon .ribbon-inner:before {
+    content: "";
+    position: absolute;
+    display: block;
+    border-style: solid;
+    border-color: #b23232 transparent transparent;
+    bottom: -1em;
+}
+
+.ribbon .ribbon-inner:before {
+    left: 0;
+    border-width: 1em 0 0 1em;
+}
+
+.ribbon .ribbon-inner:after {
+    right: 0;
+    border-width: 1em 1em 0 0;
+}
+
+.ribb {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: absolute;
+}
+.ribb::before,
+.ribb::after {
+    position: absolute;
+    z-index: 0;
+    content: "";
+    display: block;
+    border: 5px solid #D74545;
+}
+.ribb span {
+    position: absolute;
+    display: block;
+    width: 225px;
+    padding: 10px 0;
+    background-color: #f35b5b;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    font: 700 14px/1 "Lato", sans-serif;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    text-align: center;
+}
+
+/* top left*/
+.ribb-top-left {
+    top: -10px;
+    left: -10px;
+}
+.ribb-top-left::before,
+.ribb-top-left::after {
+    border-top-color: transparent;
+    border-left-color: transparent;
+}
+.ribb-top-left::before {
+    top: 0;
+    right: 30px;
+}
+.ribb-top-left::after {
+    bottom: 30px;
+    left: 0;
+}
+.ribb-top-left span {
+    right: -12px;
+    top: 30px;
+    transform: rotate(-45deg);
+}
+
 /* Modal */
 
 .show {
@@ -231,7 +348,7 @@
 }
 
 .modal.modal-preview .modal-body .elements-group {
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0, 0, 0, 0.05);
     padding: 15px;
 }
 
@@ -240,7 +357,7 @@
 }
 .modal-content {
     padding: 30px;
-    max-height: 800px;
+    max-height: 600px;
     min-height: 350px;
     overflow-y: auto;
 }

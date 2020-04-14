@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'provider', 'provider_id', 'email_verified_at', 'profile_id', 'role'
+        'name', 'email', 'password', 'provider', 'provider_id', 'email_verified_at', 'role'
     ];
 
     /**
@@ -40,4 +40,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profile() {
         return $this->hasOne('App\Models\Profile');
     }
+
+    public function formset() {
+        return $this->hasOne('App\Models\FormSet');
+    }
+    
 }
